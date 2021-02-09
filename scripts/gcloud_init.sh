@@ -4,7 +4,7 @@ container=sdk
 gcp_sdk_path=google-cloud-sdk
 gcp_sdk_archive=google-cloud-sdk-326.0.0-linux-x86_64.tar.gz
 sa_key=/keys/brim-lab.json
-podman_cmd="podman run -v /home/rodrigobrim/Documents/keys/:/keys -v ./:/root -v ./${gcp_sdk_path}:/${gcp_sdk_path} ${container}" 
+podman_cmd="podman run -v /home/rodrigobrim/Documents/keys/:/keys -v ./:/root ${container}" 
 
 # Install google cloud SDK
 if [ ! -f ${gcp_sdk_path}/bin/gcloud ]
@@ -24,12 +24,4 @@ if [ $? -ne 0 ]
 then
   # Do authenticate
   ${podman_cmd} gcloud auth activate-service-account --key-file=${sa_key}
-fi
-
-# Check if gcloud is updated
-${podman_cmd} gcloud components list 2>&1| grep -E '.* version is.*' | awk '{print $NF}' | uniq >/dev/null 2>&1
-if [ $? -eq 0 ]
-then
-  # Do update
-  ${podman_cmd} gcloud components update --quiet
 fi

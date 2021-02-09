@@ -1,7 +1,7 @@
 ARG image_version=stable-slim
 FROM debian:${image_version}
 
-ENV gcp_sdk_path=/google-cloud-sdk
+ENV gcp_sdk_path=/root/google-cloud-sdk
 ENV gcloud=${gcp_sdk_path}/bin/gcloud
 ENV debian_release=buster
 
@@ -16,4 +16,6 @@ RUN curl -fsSL https://apt.releases.hashicorp.com/gpg | apt-key add - \
  && apt-get install -y terraform \
  && apt-get clean
 
-RUN ln -s /${gcp_sdk_path}/bin/gcloud /usr/local/bin
+RUN ln -s ${gcp_sdk_path}/bin/gcloud /usr/local/bin
+
+WORKDIR /root/terraform

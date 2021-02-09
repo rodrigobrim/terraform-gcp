@@ -1,2 +1,6 @@
 .config
 google-cloud-sdk
+.terraform
+.terraform.d
+.terraform.lock.hcl
+*terraform.tfstate*
